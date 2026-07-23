@@ -5,6 +5,8 @@ import fr.diginamic.entities.Ville;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 
+import java.util.List;
+
 /**
  * Expose les méthodes métier de Ville
  */
@@ -22,8 +24,9 @@ public class VilleDao {
 
     /**
      * Recherche une ville par son département et son code ville
+     *
      * @param departement l'objet departement
-     * @param code le code de la ville (unique au sein de chaque dpt)
+     * @param code        le code de la ville (unique au sein de chaque dpt)
      * @return la ville correspondante, ou null si aucune ville ne correspond
      */
     public Ville findByDepartementAndCode(Departement departement, Integer code) {
@@ -36,10 +39,22 @@ public class VilleDao {
 
     /**
      * Sauvegarde dans la base une ville
+     *
      * @param ville l'objet ville
      */
     public void save(Ville ville) {
         em.persist(ville);
+    }
+
+    /**
+     * Affiche les villes par ordre décroissant de leur population
+     *
+     * @return
+     */
+    public List<Ville> sortByPopulationDesc() {
+        TypedQuery<Ville> query = em.createQuery(
+                "SELECT v FROM Ville v ORDER BY v.population DESC", Ville.class);
+        return query.getResultList();
     }
 
 }
