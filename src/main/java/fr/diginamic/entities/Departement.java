@@ -24,7 +24,7 @@ public class Departement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true)
-    private Integer code;
+    private String code;
 
     @ManyToOne
     @JoinColumn(name = "region_id")
